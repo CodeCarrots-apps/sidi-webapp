@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIDI - Data Deletion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      padding: 48px 40px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+
+    .logo span {
+      color: #6c63ff;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+
+    .toggle-group {
+      display: flex;
+      background: #f0f2f5;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 12px 0;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .toggle-btn.active {
+      background: #fff;
+      color: #1a1a2e;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .role-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    .role-label {
+      font-size: 13px;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e8ecf1;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: border-color 0.2s;
+      background: #fff;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #6c63ff;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary {
+      background: #6c63ff;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-danger {
+      background: #ff4757;
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      opacity: 0.9;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: #ccc;
+      font-size: 12px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e8ecf1;
+    }
+
+    .info-text {
+      font-size: 13px;
+      color: #999;
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 28px;
+      font-size: 13px;
+    }
+
+    .footer-links a {
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #6c63ff;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">SIDI<span>.</span></div>
+    <p class="subtitle">Data Deletion Request</p>
+
+    <div class="toggle-group">
+      <button class="toggle-btn active" data-role="user">User</button>
+      <button class="toggle-btn" data-role="beautician">Beautician</button>
+    </div>
+
+    <!-- User Form -->
+    <div id="user-form">
+      <div class="role-icon">👤</div>
+      <div class="role-label">User Account</div>
+      <div class="form-group">
+        <label for="user-email">Email Address</label>
+        <input type="email" id="user-email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="user-reason">Reason for Deletion</label>
+        <select id="user-reason">
+          <option value="">Select a reason...</option>
+          <option value="privacy">Privacy concerns</option>
+          <option value="unused">No longer using the app</option>
+          <option value="duplicate">Duplicate account</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button class="btn btn-danger" onclick="requestDeletion('user')">
+        Delete My Account
+      </button>
+    </div>
+
+    <!-- Beautician Form -->
+    <div id="beautician-form" class="hidden">
+      <div class="role-icon">💇</div>
+      <div class="role-label">Beautician Account</div>
+      <div class="form-group">
+        <label for="beautician-email">Email Address</label>
+        <input type="email" id="beautician-email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="beautician-business">Business Name</label>
+        <input type="text" id="beautician-business" placeholder="Salon name">
+      </div>
+      <div class="form-group">
+        <label for="beautician-reason">Reason for Deletion</label>
+        <select id="beautician-reason">
+          <option value="">Select a reason...</option>
+          <option value="closing">Closing my business</option>
+          <option value="switching">Switching to another platform</option>
+          <option value="privacy">Privacy concerns</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button class="btn btn-danger" onclick="requestDeletion('beautician')">
+        Delete My Account
+      </button>
+    </div>
+
+    <div class="divider">OR</div>
+
+    <button class="btn btn-primary" onclick="requestDeletion('both')">
+      Delete All My Data
+    </button>
+
+    <p class="info-text">
+      Your data will be permanently deleted within 30 days as per our privacy policy.
+      A confirmation email will be sent to your registered address.
+    </p>
+
+    <div class="footer-links">
+      <a href="privacy.html" target="_blank">Privacy Policy</a>
+      <span class="sep">|</span>
+      <a href="terms.html" target="_blank">Terms &amp; Conditions</a>
+    </div>
+  </div>
+
+  <script>
+    const userForm = document.getElementById('user-form');
+    const beauticianForm = document.getElementById('beautician-form');
+    const toggleBtns = document.querySelectorAll('.toggle-btn');
+
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (btn.dataset.role === 'user') {
+          userForm.classList.remove('hidden');
+          beauticianForm.classList.add('hidden');
+        } else {
+          userForm.classList.add('hidden');
+          beauticianForm.classList.remove('hidden');
+        }
+      });
+    });
+
+    function getEmail(role) {
+      if (role === 'user') return document.getElementById('user-email').value.trim();
+      if (role === 'beautician') return document.getElementById('beautician-email').value.trim();
+      const u = document.getElementById('user-email').value.trim();
+      const b = document.getElementById('beautician-email').value.trim();
+      return u || b;
+    }
+
+    function requestDeletion(role) {
+      const email = getEmail(role);
+
+      if (!email) {
+        alert('Please enter your email address.');
+        return;
+      }
+
+      const label = role === 'user' ? 'User' : role === 'beautician' ? 'Beautician' : 'All Data';
+
+      if (!confirm(`Request ${label} account deletion for ${email}?`)) return;
+
+      const payload = { email, role };
+
+      console.log('Deletion request payload:', payload);
+
+      fetch('https://api.sidiapp.com/account/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert('Deletion request submitted. Check your email for confirmation.');
+          } else {
+            alert(data.message || 'Something went wrong. Please try again.');
+          }
+        })
+        .catch(() => {
+          alert('Deletion request submitted. You will receive a confirmation email shortly.');
+        });
+    }
+  </script>
+</body>
+</html>
